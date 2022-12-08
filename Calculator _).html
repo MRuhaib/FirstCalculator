@@ -1,0 +1,224 @@
+<html>
+
+    <head>
+
+        <title>
+
+            CALCULATOR
+
+        </title>
+        
+        <style>
+            html {
+
+            font-family: arial;
+            color : red;
+            background-color: black;
+            border-style: solid;
+            font-size: 20;
+            margin: 50 100 50;
+            border-radius: 8px;
+            
+            }
+
+            h1 {
+
+            text-decoration: underline;
+            
+            }
+
+            button {
+
+            height : 80;
+            width : 140;
+            font-size: 25;
+            border-radius: 8px;
+            border: 2px solid red;
+            transition-duration: 0.4s;
+            margin-bottom : 10px;
+            box-shadow: 0 9px #999;
+
+            }
+
+            button:hover {
+
+            background-color: red; 
+            color: white;
+            
+            }
+
+            button:active {
+
+            box-shadow: 0 5px ;
+            transform: translateY(4px);
+
+            }
+
+            .clear {
+
+            width : 285
+
+            }
+
+            input {
+
+            border: 2px solid red;
+            border-radius: 8px;
+            height : 100;
+            font-size: 40;
+
+            }
+
+            .displays {
+
+            display : flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            
+            }
+
+            .first2boxes {
+
+            width : 600;
+
+            }
+
+            #hBox {
+
+            width : 600;
+            height : 400;
+
+            }
+
+            .buttonsDiv {
+
+            margin-top: 50;
+
+            }
+
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class = 'displays'>
+
+            <div><h1 style="color: red">Input:</h1>
+            <input type="text" id="outputBox" class = 'first2boxes'></input></div>
+    
+
+            <div><h1 style="color: red">Answer:</h1>
+			<input type="text" id="calcBox" class = 'first2boxes'></input></div>
+
+            <div class = 'buttonsDiv'>
+
+                <button onclick="myFunction()" id="btn1"  value="1">1</button>
+                <button onclick="myFunction()" id="btn2"  value="2">2</button>
+                <button onclick="myFunction()" id="btn3"  value="3">3</button>
+                <button onclick="operation()" style="color:orange">+</button><br>
+                <button onclick="myFunction()" id="btn4"  value="4">4</button>
+                <button onclick="myFunction()" id="btn5"  value="5">5</button>
+                <button onclick="myFunction()" id="btn6"  value="6">6</button>
+                <button onclick="operation()" style="color:orange">-</button><br>
+                <button onclick="myFunction()" id="btn7" value="7">7</button>
+                <button onclick="myFunction()" id="btn8" value="8">8</button>
+                <button onclick="myFunction()" id="btn9" value="9">9</button>
+                <button onclick="operation()" style="color:orange" id="btn*">*</button><br>
+                <button onclick="equals()" style="color:orange">=</button>
+                <button onclick="myFunction()" id="btn0" value="0">0</button>
+                <button onclick="myFunction()" id="btn." value=".">.</button>
+                <button onclick="operation()" style="color:orange">/</button><br>
+                <button onclick="clearAll()" id="btnCA" class = 'clear'>Clear All</button>
+                <button onclick="delete1()" id="btnC`" class = 'clear'>Delete</button>
+       
+            </div>
+
+            <div><h1 style="color: red">History:</h1>
+                <input type="text" id="hBox"></input><br></div>
+
+        </div>
+            
+        <script>
+
+		var operand1 = "";
+		var prevValue = "";
+        var operator = "";
+        var operatorCount = 0;
+		calcBox.value ="";
+        var argument = '';
+        var historyValue = "";
+        
+        function argumentBox(input) {
+        
+            argument = argument + input;
+            outputBox.value = argument;
+
+        }
+        
+        function clearAll() {
+
+            operand1 = "";
+		    prevValue = "";
+            operator = "";
+            operatorCount = 0;
+		    calcBox.value ="";
+            argument = '';
+            outputBox.value=''
+        }
+
+        function delete1() {
+
+            calcBox.value = calcBox.value.slice(0, -1);
+            argument = argument.slice(0, -1);
+            outputBox.value = argument;
+
+        }
+
+        function myFunction() {
+
+			calcBox.value = prevValue + event.currentTarget.innerHTML;
+			prevValue = calcBox.value;
+            argumentBox(event.currentTarget.innerHTML);
+        }
+		
+        function operation() {
+            
+            operatorCount += 1
+            if (operatorCount > 1) {
+            equals()
+            }
+            operator = event.currentTarget.innerHTML
+			operand1 = calcBox.value;
+			calcBox.value = "";
+			prevValue = "";
+            argumentBox(operator);
+            
+        }	
+
+        function equals() {
+            
+			var operand2 = calcBox.value;
+            if (operator == '+'){
+			calcBox.value = Number(operand1) + Number(operand2);
+            } else if (operator == '-'){
+			calcBox.value = Number(operand1) - Number(operand2);
+            } else if (operator == '*'){
+			calcBox.value = Number(operand1) * Number(operand2);
+            } else if (operator == '/'){
+			calcBox.value = Number(operand1) / Number(operand2);
+            }
+
+            if (event.currentTarget.innerHTML == '=') {
+            
+            historyValue = historyValue + outputBox.value + '=' + calcBox.value + '\n '
+            hBox.value = historyValue
+
+            }
+
+        }
+		
+        </script>
+    </body>
+</html>
